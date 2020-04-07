@@ -19,7 +19,6 @@ class image_reader:
         self.image_size = image_size
         self.update_all_file_paths(root_path)
         random.shuffle(self.files)
-        self.divide_data()
 
     def update_all_file_paths(self, root_path):
         paths = os.listdir(root_path)
@@ -30,15 +29,12 @@ class image_reader:
             else:
                 self.files.append(concat_path)
 
-    def divide_data(self):
-        train_number = math.ceil(len(self.files)/2)
-        self.train_path = self.files[:train_number]
-        self.evaluate_path = self.files[train_number:len(self.files)]
-
     def get_train_generator(self):
-        for path in self.train_path:
-            yield read_image(path, self.image_size)
-
-    def get_evaluate_generator(self):
-        for path in self.evaluate_path:
-            yield read_image(path, self.image_size)
+        while True:
+            for path in self.files:
+                try:
+                    image = read_image(path, self.image_size)/255
+                    x = tf.expand_dims(image, 0)
+                    yield (x, image)
+                except:
+                    print(path)
