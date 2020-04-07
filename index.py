@@ -14,12 +14,12 @@ weight_file_path = config.source['weight_file_path']
 image_size = int(config.setting['image_size'])
 epochs = int(config.setting['epochs'])
 steps_per_epoch = int(config.setting['steps_per_epoch'])
+code_size = int(config.setting['code_size'])
 
 """ initialize reader """
 reader = image_reader(data_folder_path, image_size)
 generator = reader.get_train_generator()
 
-code_size = math.floor(image_size * image_size * 3 / 24.5)
 model = autoencoder(image_size, code_size)
 
 """ load weight """

@@ -39,5 +39,12 @@ class autoencoder:
         """ display image """
         predictions = np.array(predictions[0]).reshape(
             (self.image_size, self.image_size, 3))
+
+        plt.subplot(1, 3, 1)
+        plt.title("Original")
+        plt.imshow(image)
+
+        plt.subplot(1, 3, 3)
+        plt.title("Reconstructed")
         plt.imshow(predictions)
         plt.show()
